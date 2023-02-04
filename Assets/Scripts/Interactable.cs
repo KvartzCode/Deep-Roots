@@ -16,11 +16,11 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
-        dof = urpVolume.sharedProfile.components.FirstOrDefault(
-            c => c.GetType() == typeof(DepthOfField)) as DepthOfField;
+        //dof = vp.components.FirstOrDefault(
+        //    c => c.GetType() == typeof(DepthOfField)) as DepthOfField;
 
         DepthOfField tmp;
-        if (urpVolume.profile.TryGet(out tmp))
+        if (vp.TryGet(out tmp))
             dof = tmp;
         else
             Debug.LogError("Can't get access to Depth of field");
