@@ -12,18 +12,24 @@ public class Dialogue : MonoBehaviour
 
     private int index;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         textComponent.text = "";
-        StartDialogue();
     }
+    // Start is called before the first frame update
+    //void Start()
+    //{
+    //    textComponent.text = "";
+    //    //StartDialogue();
+    //}
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (DialogueManager.Instance.gameState != GameState.Dialogue)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (textComponent.text == lines[index])
                 NextLine();
@@ -35,14 +41,23 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    void StartDialogue()
+    public void StartDialogue(string[] lines)
     {
+        this.lines = lines;
         index = 0;
+
         StartCoroutine(TypeLine());
+    }
+
+    void DialogueFinished()
+    {
+        StopAllCoroutines();
+        DialogueManager.Instance.DialogueFinished();
     }
 
     IEnumerator TypeLine()
     {
+        textComponent.text = "";
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
@@ -54,13 +69,13 @@ public class Dialogue : MonoBehaviour
     {
         if (index < lines.Length - 1)
         {
+            //textComponent.text = "";
             index++;
-            textComponent.text = "";
             StartCoroutine(TypeLine());
         }
         else
         {
-            gameObject.SetActive(false);
+            DialogueFinished();
         }
     }
 }

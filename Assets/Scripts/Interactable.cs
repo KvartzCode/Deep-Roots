@@ -7,37 +7,22 @@ using UnityEngine.Rendering.Universal;
 
 public class Interactable : MonoBehaviour
 {
-    public Volume urpVolume;
-    public bool isOn = false;
-    public DepthOfField dof;
-    public VolumeProfile vp;
-    DepthOfField dofComponent;
+    [TextArea()]
+    public string[] lines;
 
 
     private void Start()
     {
-        //dof = vp.components.FirstOrDefault(
-        //    c => c.GetType() == typeof(DepthOfField)) as DepthOfField;
-
-        DepthOfField tmp;
-        if (vp.TryGet(out tmp))
-            dof = tmp;
-        else
-            Debug.LogError("Can't get access to Depth of field");
-
+        DialogueManager.Instance.AddDialogue(this, lines);
     }
 
     void Update()
     {
-        if (!isOn)
-            dof.focalLength.value = 1;
     }
 
     public void TriggerInteraction()
     {
-        isOn = true;
-        dof.focalLength.value = 300f;
-
+        DialogueManager.Instance.StartDialogue(this);
         Debug.Log("Interaction Triggered!");
     }
 }

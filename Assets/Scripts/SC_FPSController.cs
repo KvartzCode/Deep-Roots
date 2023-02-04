@@ -36,6 +36,9 @@ public class SC_FPSController : MonoBehaviour
 
     void Update()
     {
+        if (DialogueManager.Instance.gameState != GameState.Game)
+            return;
+
         MovePlayer();
         RotatePlayer();
         ShootRaycast();
