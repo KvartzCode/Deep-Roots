@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
+[Obsolete("This was an attempt to use the new input system that didn't make it")]
 //[RequireComponent(typeof(PlayerController))]
 public class PlayerController : MonoBehaviour
 {

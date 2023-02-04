@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class SC_FPSController : MonoBehaviour
 {
+    [SerializeField] float interactionDistance = 2.5f;
+
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
@@ -18,8 +20,11 @@ public class SC_FPSController : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
-    [HideInInspector]
+    [ReadOnly]
     public bool canMove = true;
+    [SerializeField, ReadOnly]
+    Interactable target;
+
 
     void Start()
     {
@@ -30,6 +35,16 @@ public class SC_FPSController : MonoBehaviour
     }
 
     void Update()
+    {
+        MovePlayer();
+        RotatePlayer();
+        ShootRaycast();
+
+        if (Input.GetKeyDown(KeyCode.E) && target)
+            target.TriggerInteraction();
+    }
+
+    void MovePlayer()
     {
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -60,7 +75,10 @@ public class SC_FPSController : MonoBehaviour
 
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
+    }
 
+    void RotatePlayer()
+    {
         // Player and Camera rotation
         if (canMove)
         {
@@ -69,5 +87,18 @@ public class SC_FPSController : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+    }
+
+    void ShootRaycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        //Ray ray = Camera.main.ViewportPointToRay(Camera.main.transform.forward);
+        Physics.Raycast(ray, out RaycastHit hitData, interactionDistance);
+        Debug.DrawRay(ray.origin, ray.direction);
+
+        if (hitData.collider && hitData.collider.CompareTag("Interactable"))
+            target = hitData.collider.GetComponent<Interactable>();
+        else
+            target = null;
     }
 }
