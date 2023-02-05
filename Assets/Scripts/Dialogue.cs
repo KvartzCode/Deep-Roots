@@ -1,29 +1,67 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
+[Serializable]
+public class Dialoguee
+{
+    public int ID;
+    public int NextID = -1;
+    [TextArea()]
+    public string[] Lines;
+    public DialogueAnswer[] Answers;
+}
+
+[Serializable]
+public class DialogueAnswer
+{
+    public int NextID;
+    [TextArea()]
+    public string Line;
+}
+
+[Serializable]
+public class DialogueRef
+{
+    //[TextArea()]
+    //public string[] Lines;
+    public Dialoguee[] Dialoguees;
+    public Interactable InteractableRef;
+
+    public DialogueRef(Interactable interactableRef, Dialoguee[] dialoguees)
+    {
+        Dialoguees = dialoguees;
+        InteractableRef = interactableRef;
+    }
+}
 
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
+    Dialoguee[] dialoguees;
     public string[] lines;
+    public DialogueAnswer[] answers;
     [Min(1)]
     public float charsPerSecond = 15;
 
-    private int index;
+    [SerializeField]
+    private int diaIndex;
+    [SerializeField]
+    private int lineIndex;
+
+    [SerializeField]
+    GameObject buttonsHolder;
+    [SerializeField]
+    GameObject buttonPrefab;
+
 
     private void Awake()
     {
         textComponent.text = "";
     }
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    textComponent.text = "";
-    //    //StartDialogue();
-    //}
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (DialogueManager.Instance.gameState != GameState.Dialogue)
@@ -31,20 +69,25 @@ public class Dialogue : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (textComponent.text == lines[index])
+            if (textComponent.text == lines[lineIndex])
                 NextLine();
             else
             {
                 StopAllCoroutines();
-                textComponent.text = lines[index];
+                textComponent.text = lines[lineIndex];
             }
         }
     }
 
-    public void StartDialogue(string[] lines)
+    public void StartDialogue(Dialoguee[] dialoguees)
     {
-        this.lines = lines;
-        index = 0;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
+        diaIndex = 0;
+        this.dialoguees = dialoguees;
+
+        ChangeLines();
 
         StartCoroutine(TypeLine());
     }
@@ -52,13 +95,50 @@ public class Dialogue : MonoBehaviour
     void DialogueFinished()
     {
         StopAllCoroutines();
+        DestroyButtons();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         DialogueManager.Instance.DialogueFinished();
+    }
+
+    public void OnAnswer(int nextID)
+    {
+        diaIndex = nextID;
+        ChangeLines();
+        StartCoroutine(TypeLine());
+    }
+
+    void ChangeLines()
+    {
+        lineIndex = 0;
+        lines = dialoguees[diaIndex].Lines;
+        answers = dialoguees[diaIndex].Answers;
+    }
+
+    void DestroyButtons()
+    {
+        Debug.LogWarning("Destroying Buttons");
+        for (var i = buttonsHolder.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(buttonsHolder.transform.GetChild(i).gameObject);
+        }
+    }
+
+    void NewButtons()
+    {
+        foreach (var answer in answers)
+        {
+            var button = Instantiate(buttonPrefab, buttonsHolder.transform).GetComponent<AnswerButton>();
+            button.Instantiate(answer.NextID, answer.Line, this);
+        }
     }
 
     IEnumerator TypeLine()
     {
         textComponent.text = "";
-        foreach (char c in lines[index].ToCharArray())
+        foreach (char c in lines[lineIndex].ToCharArray())
         {
             textComponent.text += c;
             yield return new WaitForSeconds(1 / charsPerSecond);
@@ -67,10 +147,20 @@ public class Dialogue : MonoBehaviour
 
     void NextLine()
     {
-        if (index < lines.Length - 1)
+        if (lineIndex < lines.Length - 1)
         {
-            //textComponent.text = "";
-            index++;
+            lineIndex++;
+            StartCoroutine(TypeLine());
+        }
+        else if (answers.Length > 0)
+        {
+            DestroyButtons();
+            NewButtons();
+        }
+        else if (diaIndex < dialoguees.Length - 1)
+        {
+            diaIndex++;
+            ChangeLines();
             StartCoroutine(TypeLine());
         }
         else

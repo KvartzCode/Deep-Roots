@@ -10,14 +10,12 @@ public class Interactable : MonoBehaviour
     [TextArea()]
     public string[] lines;
 
+    public Dialoguee[] dialoguees;
+
 
     private void Start()
     {
-        DialogueManager.Instance.AddDialogue(this, lines);
-    }
-
-    void Update()
-    {
+        DialogueManager.Instance.AddDialogue(this, dialoguees);
     }
 
     public void TriggerInteraction()

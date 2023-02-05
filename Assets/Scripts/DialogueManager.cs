@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+
 public enum GameState
 {
     Game,
@@ -13,19 +14,6 @@ public enum GameState
     Paused,
 }
 
-[Serializable]
-public class DialogueRef
-{
-    [TextArea()]
-    public string[] Lines;
-    public Interactable InteractableRef;
-
-    public DialogueRef(Interactable interactableRef, string[] lines)
-    {
-        Lines = lines;
-        InteractableRef = interactableRef;
-    }
-}
 
 public class DialogueManager : MonoBehaviour
 {
@@ -57,9 +45,9 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void AddDialogue(Interactable InteractableRef, string[] lines)
+    public void AddDialogue(Interactable InteractableRef, Dialoguee[] dialoguees)
     {
-        AddDialogue(new DialogueRef(InteractableRef, lines));
+        AddDialogue(new DialogueRef(InteractableRef, dialoguees));
     }
 
     public void AddDialogue(DialogueRef dialogueRef)
@@ -79,7 +67,7 @@ public class DialogueManager : MonoBehaviour
         dof.focalLength.value = 300f;
 
         dialogue.gameObject.SetActive(true);
-        dialogue.StartDialogue(interactable.lines);
+        dialogue.StartDialogue(interactable.dialoguees);
     }
 
     public void DialogueFinished()
