@@ -6,12 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Kevin Scene.unity
-    guid: b9c231726a8f6aa40b0d996904f3b82d
+    path: Assets/Scenes/Anni Scene.unity
+    guid: c1de77350c7bb5c4487043e839be819c
   - enabled: 1
     path: Assets/Scenes/Scene 2.unity
     guid: 364a1601f506f464d9e9824395a13d4d
-  - enabled: 1
-    path: Assets/Scenes/Anni Scene.unity
-    guid: c1de77350c7bb5c4487043e839be819c
   m_configObjects: {}

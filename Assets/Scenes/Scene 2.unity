@@ -4041,6 +4041,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: tree_character
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fe67fd40303942942bfea8298d010061,
+        type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe67fd40303942942bfea8298d010061, type: 3}
 --- !u!1001 &974522584
@@ -4168,41 +4173,11 @@ MonoBehaviour:
   - ID: 0
     NextID: 1
     Lines:
-    - "Teenager:\u201DHey dad!\u201D"
-    - '*no response*'
-    - "Teenager \u201CHuh.. He can\u2019t hear me.\u201D"
-    - "Dad: \u201CMan, my folks are stupid.\u201D"
-    - "Dad: \u201CThey\u2019re fighting all the time.. And then they take it out
-      on me.\u201D\r\n"
-    - "Dad: \u201CI can\u2019t wait to move out of this hellhole.\u201D\r\n"
-    - '*Looks at bottle*
-
-'
-    - "Dad:\u201DLooks like someone left this here..\u201D\r\n"
-    Answers:
-    - NextID: 1
-      Line: Watch him take the bottle
-    - NextID: 2
-      Line: Try to stop him
-    showSceneSelectionAfterDialogue: 0
-  - ID: 1
-    NextID: 3
-    Lines:
-    - watch as he takes the bottle and drinks from it.
-    Answers: []
-    showSceneSelectionAfterDialogue: 0
-  - ID: 2
-    NextID: 4
-    Lines:
-    - "Teenager:\u201DNo, dad! Don\u2019t!\u201D\r\n"
-    Answers: []
-    showSceneSelectionAfterDialogue: 0
-  - ID: 3
-    NextID: -1
-    Lines:
-    - '*silence* Go back to the tree.
-
-'
+    - Teenager:"I had no idea my dad was going through a rough time.."
+    - Tree:"Sometimes it's painful to talk about the past.."
+    - "Teenager \u201CMy grandparents never stopped him from drinking.\""
+    - Tree:"But it's not too late."
+    - Teenager:"You're right. I will talk to him."
     Answers: []
     showSceneSelectionAfterDialogue: 0
 --- !u!1001 &997032183
@@ -5489,7 +5464,7 @@ MonoBehaviour:
     NextID: 1
     Lines:
     - "Teenager:\u201DHey dad!\u201D"
-    - '*no response*'
+    - '*No response*'
     - "Teenager \u201CHuh.. He can\u2019t hear me.\u201D"
     - "Dad: \u201CMan, my folks are stupid.\u201D"
     - "Dad: \u201CThey\u2019re fighting all the time.. And then they take it out
@@ -5508,7 +5483,7 @@ MonoBehaviour:
   - ID: 1
     NextID: 3
     Lines:
-    - watch as he takes the bottle and drinks from it.
+    - '*Watch as he takes the bottle and drinks from it.'
     Answers: []
     showSceneSelectionAfterDialogue: 0
   - ID: 2
@@ -5520,7 +5495,7 @@ MonoBehaviour:
   - ID: 3
     NextID: -1
     Lines:
-    - '*silence* Go back to the tree.
+    - '*Silence* Go back to the tree.
 
 '
     Answers: []
