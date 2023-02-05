@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -52,9 +52,39 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         if (vp.TryGet(out DepthOfField tmp))
+        {
             dof = tmp;
+            dof.focalLength.value = 1;
+        }
         else
             Debug.LogError("Can't get access to Depth of field");
+    }
+
+    public void ShowSceneButtons()
+    {
+        var btns = GameObject.Find("SceneButtons");
+        for (var i = btns.transform.childCount - 1; i >= 0; i--)
+        {
+            btns.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        gameState = GameState.Paused;
+        dialogue.gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
+    public void ChangeScene(string sceneName)
+    {
+        gameState = GameState.Paused;
+        StartCoroutine(StartLoadScene(sceneName));
+    }
+
+    IEnumerator StartLoadScene(string sceneName)
+    {
+        SceneTransition transition = FindObjectOfType<SceneTransition>();
+        transition.StartTransition(1, 4);
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene(sceneName);
     }
 
 

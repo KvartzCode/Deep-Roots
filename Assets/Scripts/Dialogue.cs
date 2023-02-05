@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
@@ -12,6 +13,8 @@ public class Dialoguee
     [TextArea()]
     public string[] Lines;
     public DialogueAnswer[] Answers;
+    //public string sceneName;
+    public bool showSceneSelectionAfterDialogue = false;
 }
 
 [Serializable]
@@ -86,6 +89,12 @@ public class Dialogue : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (dialoguees[diaIndex].showSceneSelectionAfterDialogue)
+        {
+            DialogueManager.Instance.ShowSceneButtons();
+            return;
+        }
 
         DialogueManager.Instance.DialogueFinished();
     }
