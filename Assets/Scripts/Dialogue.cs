@@ -26,6 +26,7 @@ public class DialogueAnswer
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
+    [SerializeField]
     Dialoguee[] dialoguees;
     public string[] lines;
     public DialogueAnswer[] answers;
@@ -41,13 +42,13 @@ public class Dialogue : MonoBehaviour
     GameObject buttonsHolder;
     [SerializeField]
     GameObject buttonPrefab;
+    
 
-
-    private void Awake()
+    void Awake()
     {
         textComponent.text = "";
     }
-    
+
     void Update()
     {
         if (DialogueManager.Instance.gameState != GameState.Dialogue)

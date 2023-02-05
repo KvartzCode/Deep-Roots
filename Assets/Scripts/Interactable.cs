@@ -7,9 +7,6 @@ using UnityEngine.Rendering.Universal;
 
 public class Interactable : MonoBehaviour
 {
-    [TextArea()]
-    public string[] lines;
-
     public Dialoguee[] dialoguees;
 
 

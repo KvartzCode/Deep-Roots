@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour
     public List<DialogueRef> dialogues = new List<DialogueRef>();
     [SerializeField]
     Dialogue dialogue;
-    public GameState gameState;
+    public GameState gameState = GameState.Paused;
 
     public DepthOfField dof;
     public VolumeProfile vp;
