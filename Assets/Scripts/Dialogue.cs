@@ -22,20 +22,6 @@ public class DialogueAnswer
     public string Line;
 }
 
-[Serializable]
-public class DialogueRef
-{
-    //[TextArea()]
-    //public string[] Lines;
-    public Dialoguee[] Dialoguees;
-    public Interactable InteractableRef;
-
-    public DialogueRef(Interactable interactableRef, Dialoguee[] dialoguees)
-    {
-        Dialoguees = dialoguees;
-        InteractableRef = interactableRef;
-    }
-}
 
 public class Dialogue : MonoBehaviour
 {

@@ -14,6 +14,19 @@ public enum GameState
     Paused,
 }
 
+[Serializable]
+public class DialogueRef
+{
+    public Dialoguee[] Dialoguees;
+    public Interactable InteractableRef;
+
+    public DialogueRef(Interactable interactableRef, Dialoguee[] dialoguees)
+    {
+        Dialoguees = dialoguees;
+        InteractableRef = interactableRef;
+    }
+}
+
 
 public class DialogueManager : MonoBehaviour
 {
