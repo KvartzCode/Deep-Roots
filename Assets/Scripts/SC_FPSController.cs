@@ -44,7 +44,18 @@ public class SC_FPSController : MonoBehaviour
         ShootRaycast();
 
         if (Input.GetKeyDown(KeyCode.E) && target)
+        {
+            DialogueManager.Instance.HideInteractionButton();
             target.TriggerInteraction();
+        }
+        else if (target)
+        {
+            DialogueManager.Instance.ShowInteractionButton();
+        }
+        else
+        {
+            DialogueManager.Instance.HideInteractionButton();
+        }
     }
 
     void MovePlayer()

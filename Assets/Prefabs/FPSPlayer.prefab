@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 2.5
-  walkingSpeed: 7.5
-  runningSpeed: 11.5
+  walkingSpeed: 3
+  runningSpeed: 7
   jumpSpeed: 8
   gravity: 20
   playerCamera: {fileID: 473956248197558111}

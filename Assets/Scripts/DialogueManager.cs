@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -40,6 +41,8 @@ public class DialogueManager : MonoBehaviour
     public DepthOfField dof;
     public VolumeProfile vp;
 
+    public TextMeshProUGUI interactText;
+
 
     void Awake()
     {
@@ -71,6 +74,16 @@ public class DialogueManager : MonoBehaviour
         dialogue.gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+    }
+
+    public void ShowInteractionButton()
+    {
+        interactText.gameObject.SetActive(true);
+    }
+
+    public void HideInteractionButton()
+    {
+        interactText.gameObject.SetActive(false);
     }
 
     public void ChangeScene(string sceneName)
