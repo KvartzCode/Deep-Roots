@@ -50,8 +50,7 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        DepthOfField tmp;
-        if (vp.TryGet(out tmp))
+        if (vp.TryGet(out DepthOfField tmp))
             dof = tmp;
         else
             Debug.LogError("Can't get access to Depth of field");
