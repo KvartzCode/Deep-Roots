@@ -106,6 +106,7 @@ public class Dialogue : MonoBehaviour
     public void OnAnswer(int nextID)
     {
         diaIndex = nextID;
+        DestroyButtons();
         ChangeLines();
         StartCoroutine(TypeLine());
     }
